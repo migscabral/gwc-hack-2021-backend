@@ -1,0 +1,52 @@
+- name: allowed-queries
+  definition:
+    queries:
+    - name: Get Users
+      query: |-
+        query GetUsers {
+          users {
+            created_at
+            deleted_at
+            id
+            updated_at
+            username
+          }
+        }
+    - name: Get Tasks By Username
+      query: |-
+        query GetTasksByUser ($username: String){
+          users(where: {username: {_eq: $username}}) {
+            id
+            username
+            created_at
+            deleted_at
+            updated_at
+            todos {
+              content
+              created_at
+              deleted_at
+              id
+              is_completed
+              updated_at
+            }
+          }
+        }
+    - name: Get All Tasks Of All Users
+      query: |-
+        query GetUsersTasks {
+          users {
+            id
+            username
+            created_at
+            deleted_at
+            updated_at
+            todos {
+              content
+              created_at
+              deleted_at
+              id
+              is_completed
+              updated_at
+            }
+          }
+        }

@@ -1,0 +1,27 @@
+- definition:
+    query:
+      collection_name: allowed-queries
+      query_name: Get Users
+  url: user
+  methods:
+  - GET
+  name: Get Users
+  comment: null
+- definition:
+    query:
+      collection_name: allowed-queries
+      query_name: Get Tasks By Username
+  url: user/:username/task
+  methods:
+  - GET
+  name: Get Tasks By Username
+  comment: null
+- definition:
+    query:
+      collection_name: allowed-queries
+      query_name: Get All Tasks Of All Users
+  url: user/task
+  methods:
+  - GET
+  name: Get All Tasks Of All Users
+  comment: null

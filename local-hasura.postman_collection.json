@@ -1,0 +1,258 @@
+{
+	"info": {
+		"_postman_id": "f48600cf-0a21-47c4-beb5-42e3481ee4ad",
+		"name": "Local Hasura",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "REST - Get All Users",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-HASURA-ADMIN-SECRET",
+						"value": "myadminsecretkey",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/rest/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"rest",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "REST - Get All Tasks by All Users",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-HASURA-ADMIN-SECRET",
+						"value": "myadminsecretkey",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/rest/user/task",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"rest",
+						"user",
+						"task"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "REST - Get All Tasks by User",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-HASURA-ADMIN-SECRET",
+						"value": "myadminsecretkey",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/rest/user/juan/task",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"rest",
+						"user",
+						"juan",
+						"task"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GRAPHQL - Get All Users",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-HASURA-ADMIN-SECRET",
+						"value": "myadminsecretkey",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query GetTasksByUser ($username: String){\n  users(where: {username: {_eq: $username}}) {\n    id\n    username\n    created_at\n    deleted_at\n    updated_at\n    todos {\n      content\n      created_at\n      deleted_at\n      id\n      is_completed\n      updated_at\n    }\n  }\n}\n",
+						"variables": "{\n    \"username\": \"juan\"\n}"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GRAPHQL - Get All Tasks by All Users",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-HASURA-ADMIN-SECRET",
+						"value": "myadminsecretkey",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query GetUsersTasks {\n  users {\n    id\n    username\n    created_at\n    deleted_at\n    updated_at\n    todos {\n      content\n      created_at\n      deleted_at\n      id\n      is_completed\n      updated_at\n    }\n  }\n}\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GRAPHQL - Get All Tasks by User",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-HASURA-ADMIN-SECRET",
+						"value": "myadminsecretkey",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query GetTasksByUser ($username: String){\n  users(where: {username: {_eq: $username}}) {\n    id\n    username\n    created_at\n    deleted_at\n    updated_at\n    todos {\n      content\n      created_at\n      deleted_at\n      id\n      is_completed\n      updated_at\n    }\n  }\n}\n",
+						"variables": "{\n    \"username\": \"juan\"\n}"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GRAPHQL - Add Task To User",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-HASURA-ADMIN-SECRET",
+						"value": "myadminsecretkey",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation AddTaskToUser($username: String, $task: String) {\n  insert_todos_one(object: {\n      user: {\n          data: {\n              username: $username\n            }, \n            on_conflict: {\n                constraint: users_username_key, \n                update_columns: updated_at\n                }\n        }, \n        content: $task, \n        is_completed: false\n    }) {\n    content\n    user {\n      username\n    }\n    id\n    is_completed\n    deleted_at\n    created_at\n    updated_at\n  }\n}\n",
+						"variables": "{\n  \"username\": \"juan\",\n  \"task\": \"Wash the car.\"\n}\n"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GRAPHQL - Seed Data",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-HASURA-ADMIN-SECRET",
+						"value": "myadminsecretkey",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation SeedData($users: [users_insert_input!]! ) {\ninsert_users(objects: $users) {\nreturning {\nid\nusername\ntodos {\n    id,\n    content\n}\n}\n}\n}",
+						"variables": "{\n\"users\": [\n{\n\"username\": \"juan\",\n\"todos\": {\n    \"data\": [\n        {\"content\": \"Cook breakfast.\", \"is_completed\": false},\n        {\"content\": \"Wash the dishes.\", \"is_completed\": false},\n        {\"content\": \"Clean the room.\", \"is_completed\": false}\n    ]\n}\n},\n{\n\"username\": \"maria\",\n\"todos\": {\n    \"data\": [\n        {\"content\": \"Walk the dog.\", \"is_completed\": false},\n        {\"content\": \"Buy groceries.\", \"is_completed\": false}\n    ]\n}\n}\n]\n}\n"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
